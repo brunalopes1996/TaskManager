@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, ImageBackground, TouchableOpacity } from "react-native"
+import { Text, View, StyleSheet, ImageBackground, TouchableOpacity, FlatList } from "react-native"
 
 import Icon from "react-native-vector-icons/FontAwesome"
 
@@ -10,8 +10,13 @@ import Task from "../components/Task"
 
 export default function TaskList(){
 
+    const tasks = [
+        {
+
+        }
+    ]
+
     const userTimeZone = moment.tz.guess(); // Detecta o fuso horario do dispositivo
-    console.log(userTimeZone)
     const today = moment().tz('America/Sao_Paulo').locale('pt-br').format('ddd, D [de] MMMM')
     // const today = moment().locale('pt-br').format('ddd, D [de] MMMM')
 
@@ -32,7 +37,11 @@ export default function TaskList(){
             </ImageBackground>
 
             <View style={styles.taskList}>
-                <Task />
+                <FlatList 
+                    data={tasks}
+                    keyExtractor={item => `${item.id}`}
+                    renderItem={({item}) =>  <Task {...item} />}
+                />
             </View>
             
             <TouchableOpacity
