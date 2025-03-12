@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, ImageBackground, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, ImageBackground, TouchableOpacity } from "react-native"
 
 import Icon from "react-native-vector-icons/FontAwesome"
 
@@ -6,16 +6,18 @@ import moment from "moment-timezone"
 import 'moment/locale/pt-br'
 
 import todayImage from '../../assets/imgs/today.jpg'
+import Task from "../components/Task"
 
 export default function TaskList(){
 
-    const userTimeZone = moment.tz.guess(); // Detecta o fuso horário do dispositivo
+    const userTimeZone = moment.tz.guess(); // Detecta o fuso horario do dispositivo
     console.log(userTimeZone)
     const today = moment().tz('America/Sao_Paulo').locale('pt-br').format('ddd, D [de] MMMM')
     // const today = moment().locale('pt-br').format('ddd, D [de] MMMM')
-    
+
     return(
         <View style={styles.container}>
+            
             <ImageBackground source={todayImage} style={styles.background}>
                 <View style={styles.iconBar}>
                     <TouchableOpacity onPress={() => console.warn('oi')}>
@@ -30,10 +32,14 @@ export default function TaskList(){
             </ImageBackground>
 
             <View style={styles.taskList}>
-
+                <Task />
             </View>
-            <TouchableOpacity style={styles.addButton} activeOpacity={0.7} onPress={() => console.warn('+')}>
-
+            
+            <TouchableOpacity
+                style={styles.addButton}
+                activeOpacity={0.7}
+                onPress={() => console.warn('+')}
+            >
                 <Icon name="plus" size={20} color={'#fff'} />
 
             </TouchableOpacity>
@@ -44,10 +50,10 @@ export default function TaskList(){
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 1
     },
     background: {
-        flex: 3,
+        flex: 3
     },
     taskList: {
         flex: 7
@@ -66,7 +72,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20,
         marginLeft: 20,
-        marginBottom: 30   
+        marginBottom: 30
     },
     iconBar: {
         flexDirection: 'row',
