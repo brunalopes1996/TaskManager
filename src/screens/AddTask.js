@@ -1,10 +1,42 @@
 import { useState } from "react";
-import { Modal, StyleSheet, TouchableWithoutFeedback, View, Text, TextInput, TouchableOpacity } from "react-native";
+import { Modal, StyleSheet, TouchableWithoutFeedback, View, Text, TextInput, TouchableOpacity, Platform } from "react-native";
 import commonStyles from "../commonStyles";
+
+import moment from "moment";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function AddTask(props) {
 
     const [desc, setDesc] = useState("")
+    const [date, setDate] = useState(new Date())
+    const [showDatePicker, setShowDatePicker] = useState(false)
+
+    const getDatePicker = () => {
+        let datePicker = 
+        <DateTimePicker value={date} 
+            onChange={(_, date) => {
+                setDate(date)
+                setShowDatePicker(false)
+            }}
+            mode='date'
+        />
+
+        const dateString = moment(date).format('ddd, D [de] MMMM [de] YYYY')
+
+        if(Platform.OS === 'android') {
+            datePicker = (
+                <View>
+                    <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+                        <Text style={styles.date}>
+                            {dateString}
+                        </Text>
+                    </TouchableOpacity>
+                    {showDatePicker && datePicker}
+                </View>
+            )
+        }
+        return datePicker
+    }
 
     return(
         <Modal transparent={true} visible={props.isVisible} onRequestClose={props.onCancel} animationType="slide">
@@ -21,6 +53,9 @@ export default function AddTask(props) {
                     placeholder="Informe a Descrição"
                     onChangeText={setDesc}
                     value={desc} />
+
+                {this.getDatePicker()}
+                
                 <View style={styles.buttons}>
                     <TouchableOpacity onPress={props.onCancel}>
                         <Text style={styles.button}>Cancelar</Text>
