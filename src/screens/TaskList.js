@@ -44,7 +44,7 @@ export default function TaskList() {
 
     useEffect(() => {
         filterTasks()
-    }, [showDoneTasks])
+    }, [showDoneTasks, tasks])
 
     const toggleTask = taskId => {
         const taskList = [...tasks]
@@ -74,6 +74,22 @@ export default function TaskList() {
         }
 
         setVisibleTasks(visibleTasks)
+    }
+
+    const addTask = newTask => {
+        if(!newTask.desc || !newTask.desc.trim()){
+            Alert.alert('Dados Inválidos', 'Descrição não informada!')
+        }
+
+        const tempTasks = [...tasks]
+        tempTasks.push({
+            id: Math.random(),
+            desc: newTask.desc,
+            estimateAt: newTask.date,
+            doneAt: null
+        })
+        setTasks(tempTasks)
+        setShowAddTask(false)
     }
 
     return (
